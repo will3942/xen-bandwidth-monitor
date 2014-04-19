@@ -1,0 +1,9 @@
+#!/bin/bash
+ADDR=$1
+/sbin/iptables -A INPUT -s $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -A OUTPUT -s $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -A FORWARD -s $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -A INPUT -d $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -A OUTPUT -d $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -A FORWARD -d $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+echo “Block ALL INPUT from ” $ADDR ” net DROPPED.”

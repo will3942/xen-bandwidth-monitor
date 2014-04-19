@@ -1,0 +1,9 @@
+#!/bin/bash
+ADDR=$1
+/sbin/iptables -D INPUT -s $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -D OUTPUT -s $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -D FORWARD -s $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -D INPUT -d $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -D OUTPUT -d $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+/sbin/iptables -D FORWARD -d $ADDR/32 -j REJECT --reject-with icmp-port-unreachable
+echo “Allow ALL INPUT from ” $ADDR ” net ALLOWED.”
